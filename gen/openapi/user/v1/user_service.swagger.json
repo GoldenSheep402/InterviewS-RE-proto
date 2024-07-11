@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "auth/v1/auth_service.proto",
+    "title": "user/v1/user_service.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "AuthService"
+      "name": "UserService"
     }
   ],
   "consumes": [
@@ -16,15 +16,14 @@
     "application/json"
   ],
   "paths": {
-    "/gapi/auth/v1/login": {
+    "/gapi/user/v1/edit": {
       "post": {
-        "summary": "用户登录",
-        "operationId": "AuthService_Login",
+        "operationId": "UserService_EditUserInfo",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1LoginResponse"
+              "$ref": "#/definitions/v1EditUserInfoResponse"
             }
           },
           "default": {
@@ -40,24 +39,23 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1LoginRequest"
+              "$ref": "#/definitions/v1EditUserInfoRequest"
             }
           }
         ],
         "tags": [
-          "AuthService"
+          "UserService"
         ]
       }
     },
-    "/gapi/auth/v1/refreshToken": {
+    "/gapi/user/v1/info": {
       "post": {
-        "summary": "Token刷新",
-        "operationId": "AuthService_RefreshToken",
+        "operationId": "UserService_GetUserInfo",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1RefreshTokenResponse"
+              "$ref": "#/definitions/v1GetUserInfoResponse"
             }
           },
           "default": {
@@ -73,45 +71,12 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1RefreshTokenRequest"
+              "$ref": "#/definitions/v1GetUserInfoRequest"
             }
           }
         ],
         "tags": [
-          "AuthService"
-        ]
-      }
-    },
-    "/gapi/auth/v1/register": {
-      "post": {
-        "summary": "TODO: reg with oauth \u0026 login\n用户注册",
-        "operationId": "AuthService_Register",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1RegisterResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1RegisterRequest"
-            }
-          }
-        ],
-        "tags": [
-          "AuthService"
+          "UserService"
         ]
       }
     }
@@ -145,66 +110,65 @@
         }
       }
     },
-    "v1LoginRequest": {
+    "v1EditUserInfoRequest": {
       "type": "object",
       "properties": {
-        "email": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        }
-      },
-      "title": "用户登录"
-    },
-    "v1LoginResponse": {
-      "type": "object",
-      "properties": {
-        "accessToken": {
-          "type": "string"
-        },
-        "refreshToken": {
-          "type": "string"
+        "info": {
+          "$ref": "#/definitions/v1User",
+          "title": "user info, if user id is empty, edit current user info"
         }
       }
     },
-    "v1RefreshTokenRequest": {
+    "v1EditUserInfoResponse": {
       "type": "object",
       "properties": {
-        "refreshToken": {
-          "type": "string"
-        }
-      },
-      "title": "Token刷新"
-    },
-    "v1RefreshTokenResponse": {
-      "type": "object",
-      "properties": {
-        "accessToken": {
-          "type": "string"
-        },
-        "refreshToken": {
-          "type": "string"
+        "info": {
+          "$ref": "#/definitions/v1User"
         }
       }
     },
-    "v1RegisterRequest": {
+    "v1GetUserInfoRequest": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "title": "user id, if empty, get current user info"
+        }
+      }
+    },
+    "v1GetUserInfoResponse": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/v1User"
+        }
+      }
+    },
+    "v1User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
         "name": {
           "type": "string"
         },
         "email": {
           "type": "string"
         },
-        "password": {
+        "phone": {
+          "type": "string"
+        },
+        "staffId": {
+          "type": "string"
+        },
+        "college": {
+          "type": "string"
+        },
+        "major": {
           "type": "string"
         }
-      },
-      "title": "用户注册"
-    },
-    "v1RegisterResponse": {
-      "type": "object"
+      }
     }
   }
 }

@@ -6,12 +6,17 @@
 
 import * as fm from "../../fetch.pb"
 export type RegisterRequest = {
+  name?: string
+  email?: string
+  password?: string
 }
 
 export type RegisterResponse = {
 }
 
 export type LoginRequest = {
+  email?: string
+  password?: string
 }
 
 export type LoginResponse = {
