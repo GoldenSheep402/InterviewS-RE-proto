@@ -1,4 +1,4 @@
-module github.com/juanjiTech/termium-proto
+module github.com/GoldenSheep402/IntervierS-RE-proto
 
 go 1.21.1
 
