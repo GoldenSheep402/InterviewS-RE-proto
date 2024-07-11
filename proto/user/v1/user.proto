@@ -1,0 +1,14 @@
+syntax = "proto3";
+package user.v1;
+
+option go_package = "github.com/GoldenSheep402/InterviewS-RE-proto/gen/proto/user/v1;userV1";
+
+message User {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string phone = 4;
+  string staffId = 5;
+  string college = 6;
+  string major = 7;
+}
