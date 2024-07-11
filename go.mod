@@ -1,4 +1,4 @@
-module github.com/GoldenSheep402/IntervierS-RE-proto
+module github.com/GoldenSheep402/InterviewS-RE-proto
 
 go 1.21.1
 

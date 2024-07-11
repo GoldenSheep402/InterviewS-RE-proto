@@ -1,0 +1,54 @@
+syntax = "proto3";
+package auth.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/GoldenSheep402/InterviewS-RE-proto/gen/proto/auth/v1;authV1";
+
+service AuthService {
+  // 用户注册
+  rpc Register(RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post: "/gapi/auth/v1/register",
+      body: "*"
+    };
+  }
+
+  // 用户登录
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/gapi/auth/v1/login",
+      body: "*"
+    };
+  }
+
+  // Token刷新
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {
+    option (google.api.http) = {
+      post: "/gapi/auth/v1/refreshToken"
+      body: "*"
+    };
+  }
+}
+
+// 用户注册
+message RegisterRequest {
+}
+message RegisterResponse {}
+
+// 用户登录
+message LoginRequest {
+}
+message LoginResponse {
+  string accessToken = 1;
+  string refreshToken = 2;
+}
+
+// Token刷新
+message RefreshTokenRequest {
+  string refreshToken = 1;
+}
+message RefreshTokenResponse {
+  string accessToken = 1;
+  string refreshToken = 2;
+}
