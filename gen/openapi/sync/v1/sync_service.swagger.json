@@ -1,0 +1,621 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "sync/v1/sync_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "SyncService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/gapi/sync/v1/config": {
+      "get": {
+        "summary": "拉取指定时间点之后的配置变动信息",
+        "operationId": "SyncService_SyncConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SyncConfigResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "after",
+            "description": "获取该时间之后的设置变化，若不设置该字段，则拉取全量配置信息",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "teamId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "SyncService"
+        ]
+      },
+      "post": {
+        "summary": "提交最新配置 若配置的ID为空，则创建新配置。若配置的删除时间不为空，则代表该配置已被删除。这里只负责配置内容修改。",
+        "operationId": "SyncService_UpdateConfig",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateConfigResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateConfigRequest"
+            }
+          }
+        ],
+        "tags": [
+          "SyncService"
+        ]
+      }
+    },
+    "/gapi/sync/v1/key_wallet": {
+      "get": {
+        "summary": "获取用户密钥对",
+        "operationId": "SyncService_SyncUserKeyWallet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SyncUserKeyWalletResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "after",
+            "description": "获取该时间之后的设置变化，若不设置该字段，则拉取全量配置信息",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "SyncService"
+        ]
+      },
+      "post": {
+        "summary": "修改用户密钥对，修改的时候所有相关组的加密密钥均要替换",
+        "operationId": "SyncService_UpdateUserKeyWallet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateUserKeyWalletResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateUserKeyWalletRequest"
+            }
+          }
+        ],
+        "tags": [
+          "SyncService"
+        ]
+      }
+    },
+    "/gapi/sync/v1/team": {
+      "get": {
+        "summary": "通过UID获取所有所在组变动信息",
+        "operationId": "SyncService_SyncTeam",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SyncTeamResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "tags": [
+          "SyncService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1Host": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "内部唯一ID ulid"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "删除时间"
+        },
+        "innerId": {
+          "type": "string",
+          "title": "内部ID 资源id"
+        },
+        "label": {
+          "type": "string",
+          "title": "标签"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "address": {
+          "type": "string",
+          "title": "ip或host"
+        },
+        "port": {
+          "type": "string",
+          "format": "int64"
+        },
+        "charset": {
+          "type": "string",
+          "title": "字符集"
+        },
+        "username": {
+          "type": "string",
+          "title": "用户名"
+        },
+        "password": {
+          "type": "string",
+          "title": "密码"
+        },
+        "keyId": {
+          "type": "string",
+          "title": "密钥ID"
+        },
+        "identityId": {
+          "type": "string",
+          "title": "身份ID 若身份ID不为空，则覆盖手动配置"
+        }
+      }
+    },
+    "v1Identity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "内部唯一ID ulid"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "删除时间"
+        },
+        "innerId": {
+          "type": "string",
+          "title": "内部ID 资源id"
+        },
+        "label": {
+          "type": "string",
+          "title": "标签"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "keyId": {
+          "type": "string",
+          "title": "密钥ID"
+        }
+      },
+      "title": "Identity（身份） 包含身份验证详细信息，如果某些服务器需要提供同一组凭据，则可以节省配置的时间。\n这些凭据可以快速添加为身份并与主机条目链接。当凭据发生更改时，不必更新每台主机而只需更新身份即可。"
+    },
+    "v1KnownHost": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "内部唯一ID ulid"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "删除时间"
+        },
+        "innerId": {
+          "type": "string",
+          "title": "内部ID 资源id"
+        },
+        "address": {
+          "type": "string",
+          "title": "ip或host"
+        },
+        "publicKey": {
+          "type": "string",
+          "title": "公钥"
+        }
+      }
+    },
+    "v1SshKey": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "内部唯一ID ulid"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "创建时间"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "更新时间"
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "删除时间"
+        },
+        "innerId": {
+          "type": "string",
+          "title": "内部ID 资源id"
+        },
+        "label": {
+          "type": "string",
+          "title": "标签"
+        },
+        "privateKey": {
+          "type": "string",
+          "title": "私钥"
+        },
+        "publicKey": {
+          "type": "string",
+          "title": "公钥"
+        },
+        "certificate": {
+          "type": "string",
+          "title": "证书"
+        }
+      },
+      "title": "SSH 密钥"
+    },
+    "v1SyncConfigResponse": {
+      "type": "object",
+      "properties": {
+        "serverTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "当前服务器时间，用于给客户端下一次拉取变动时做一个参照，避免因客户端时间偏差导致同步混乱"
+        },
+        "hostSet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Host"
+          }
+        },
+        "knownHostSet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1KnownHost"
+          }
+        },
+        "sshKeySet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1SshKey"
+          }
+        },
+        "identitySet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Identity"
+          }
+        }
+      }
+    },
+    "v1SyncTeamResponse": {
+      "type": "object",
+      "properties": {
+        "serverTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "teams": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Team"
+          }
+        }
+      }
+    },
+    "v1SyncUserKeyWalletResponse": {
+      "type": "object",
+      "properties": {
+        "serverTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "当前服务器时间，用于给客户端下一次拉取变动时做一个参照，避免因客户端时间偏差导致同步混乱"
+        },
+        "publicKey": {
+          "type": "string"
+        },
+        "encryptedPrivateKey": {
+          "type": "string"
+        },
+        "userKeyWalletSet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1UserKeyWallet"
+          }
+        }
+      }
+    },
+    "v1Team": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "string"
+        },
+        "uid": {
+          "type": "string",
+          "title": "创建者"
+        },
+        "publicKey": {
+          "type": "string",
+          "title": "公钥，公钥存在服务器上，加密的私钥与相关用户关联存储"
+        }
+      }
+    },
+    "v1UpdateConfigRequest": {
+      "type": "object",
+      "properties": {
+        "teamId": {
+          "type": "string"
+        },
+        "host": {
+          "$ref": "#/definitions/v1Host"
+        },
+        "knownHost": {
+          "$ref": "#/definitions/v1KnownHost"
+        },
+        "sshKey": {
+          "$ref": "#/definitions/v1SshKey"
+        },
+        "identity": {
+          "$ref": "#/definitions/v1Identity"
+        }
+      },
+      "title": "UpdateConfig"
+    },
+    "v1UpdateConfigResponse": {
+      "type": "object",
+      "properties": {
+        "host": {
+          "$ref": "#/definitions/v1Host"
+        },
+        "knownHost": {
+          "$ref": "#/definitions/v1KnownHost"
+        },
+        "sshKey": {
+          "$ref": "#/definitions/v1SshKey"
+        },
+        "identity": {
+          "$ref": "#/definitions/v1Identity"
+        }
+      }
+    },
+    "v1UpdateUserKeyWalletRequest": {
+      "type": "object",
+      "properties": {
+        "publicKey": {
+          "type": "string"
+        },
+        "encryptedPrivateKey": {
+          "type": "string"
+        },
+        "userKeyWalletSet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1UserKeyWallet"
+          }
+        }
+      },
+      "title": "UpdateUserKeyWallet"
+    },
+    "v1UpdateUserKeyWalletResponse": {
+      "type": "object",
+      "properties": {
+        "publicKey": {
+          "type": "string"
+        },
+        "encryptedPrivateKey": {
+          "type": "string"
+        },
+        "userKeyWalletSet": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1UserKeyWallet"
+          }
+        }
+      }
+    },
+    "v1UserKeyWallet": {
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string"
+        },
+        "tid": {
+          "type": "string"
+        },
+        "encryptedTeamPrivateKey": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deletedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}
