@@ -14,19 +14,18 @@ export type GetUserInfoResponse = {
   info?: UserV1User.User
 }
 
-export type EditUserInfoRequest = {
+export type UpdateUserInfoRequest = {
   info?: UserV1User.User
 }
 
-export type EditUserInfoResponse = {
-  info?: UserV1User.User
+export type UpdateUserInfoResponse = {
 }
 
 export class UserService {
   static GetUserInfo(req: GetUserInfoRequest, initReq?: fm.InitReq): Promise<GetUserInfoResponse> {
     return fm.fetchReq<GetUserInfoRequest, GetUserInfoResponse>(`/gapi/user/v1/info`, {...initReq, method: "POST", body: JSON.stringify(req, fm.replacer)})
   }
-  static EditUserInfo(req: EditUserInfoRequest, initReq?: fm.InitReq): Promise<EditUserInfoResponse> {
-    return fm.fetchReq<EditUserInfoRequest, EditUserInfoResponse>(`/gapi/user/v1/edit`, {...initReq, method: "POST", body: JSON.stringify(req, fm.replacer)})
+  static UpdateUserInfo(req: UpdateUserInfoRequest, initReq?: fm.InitReq): Promise<UpdateUserInfoResponse> {
+    return fm.fetchReq<UpdateUserInfoRequest, UpdateUserInfoResponse>(`/gapi/user/v1/edit`, {...initReq, method: "POST", body: JSON.stringify(req, fm.replacer)})
   }
 }

@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	UserService_GetUserInfo_FullMethodName  = "/user.v1.UserService/GetUserInfo"
-	UserService_EditUserInfo_FullMethodName = "/user.v1.UserService/EditUserInfo"
+	UserService_GetUserInfo_FullMethodName    = "/user.v1.UserService/GetUserInfo"
+	UserService_UpdateUserInfo_FullMethodName = "/user.v1.UserService/UpdateUserInfo"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -28,7 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
 	GetUserInfo(ctx context.Context, in *GetUserInfoRequest, opts ...grpc.CallOption) (*GetUserInfoResponse, error)
-	EditUserInfo(ctx context.Context, in *EditUserInfoRequest, opts ...grpc.CallOption) (*EditUserInfoResponse, error)
+	UpdateUserInfo(ctx context.Context, in *UpdateUserInfoRequest, opts ...grpc.CallOption) (*UpdateUserInfoResponse, error)
 }
 
 type userServiceClient struct {
@@ -49,10 +49,10 @@ func (c *userServiceClient) GetUserInfo(ctx context.Context, in *GetUserInfoRequ
 	return out, nil
 }
 
-func (c *userServiceClient) EditUserInfo(ctx context.Context, in *EditUserInfoRequest, opts ...grpc.CallOption) (*EditUserInfoResponse, error) {
+func (c *userServiceClient) UpdateUserInfo(ctx context.Context, in *UpdateUserInfoRequest, opts ...grpc.CallOption) (*UpdateUserInfoResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(EditUserInfoResponse)
-	err := c.cc.Invoke(ctx, UserService_EditUserInfo_FullMethodName, in, out, cOpts...)
+	out := new(UpdateUserInfoResponse)
+	err := c.cc.Invoke(ctx, UserService_UpdateUserInfo_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -64,7 +64,7 @@ func (c *userServiceClient) EditUserInfo(ctx context.Context, in *EditUserInfoRe
 // for forward compatibility
 type UserServiceServer interface {
 	GetUserInfo(context.Context, *GetUserInfoRequest) (*GetUserInfoResponse, error)
-	EditUserInfo(context.Context, *EditUserInfoRequest) (*EditUserInfoResponse, error)
+	UpdateUserInfo(context.Context, *UpdateUserInfoRequest) (*UpdateUserInfoResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -75,8 +75,8 @@ type UnimplementedUserServiceServer struct {
 func (UnimplementedUserServiceServer) GetUserInfo(context.Context, *GetUserInfoRequest) (*GetUserInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserInfo not implemented")
 }
-func (UnimplementedUserServiceServer) EditUserInfo(context.Context, *EditUserInfoRequest) (*EditUserInfoResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method EditUserInfo not implemented")
+func (UnimplementedUserServiceServer) UpdateUserInfo(context.Context, *UpdateUserInfoRequest) (*UpdateUserInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUserInfo not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -109,20 +109,20 @@ func _UserService_GetUserInfo_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserService_EditUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EditUserInfoRequest)
+func _UserService_UpdateUserInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserServiceServer).EditUserInfo(ctx, in)
+		return srv.(UserServiceServer).UpdateUserInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: UserService_EditUserInfo_FullMethodName,
+		FullMethod: UserService_UpdateUserInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserServiceServer).EditUserInfo(ctx, req.(*EditUserInfoRequest))
+		return srv.(UserServiceServer).UpdateUserInfo(ctx, req.(*UpdateUserInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -139,8 +139,8 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _UserService_GetUserInfo_Handler,
 		},
 		{
-			MethodName: "EditUserInfo",
-			Handler:    _UserService_EditUserInfo_Handler,
+			MethodName: "UpdateUserInfo",
+			Handler:    _UserService_UpdateUserInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

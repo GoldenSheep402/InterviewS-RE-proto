@@ -18,12 +18,12 @@
   "paths": {
     "/gapi/user/v1/edit": {
       "post": {
-        "operationId": "UserService_EditUserInfo",
+        "operationId": "UserService_UpdateUserInfo",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1EditUserInfoResponse"
+              "$ref": "#/definitions/v1UpdateUserInfoResponse"
             }
           },
           "default": {
@@ -39,7 +39,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1EditUserInfoRequest"
+              "$ref": "#/definitions/v1UpdateUserInfoRequest"
             }
           }
         ],
@@ -110,23 +110,6 @@
         }
       }
     },
-    "v1EditUserInfoRequest": {
-      "type": "object",
-      "properties": {
-        "info": {
-          "$ref": "#/definitions/v1User",
-          "title": "user info, if user id is empty, edit current user info"
-        }
-      }
-    },
-    "v1EditUserInfoResponse": {
-      "type": "object",
-      "properties": {
-        "info": {
-          "$ref": "#/definitions/v1User"
-        }
-      }
-    },
     "v1GetUserInfoRequest": {
       "type": "object",
       "properties": {
@@ -143,6 +126,18 @@
           "$ref": "#/definitions/v1User"
         }
       }
+    },
+    "v1UpdateUserInfoRequest": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "$ref": "#/definitions/v1User",
+          "title": "user info, if user id is empty, edit current user info"
+        }
+      }
+    },
+    "v1UpdateUserInfoResponse": {
+      "type": "object"
     },
     "v1User": {
       "type": "object",

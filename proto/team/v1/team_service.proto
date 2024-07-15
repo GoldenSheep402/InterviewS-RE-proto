@@ -7,7 +7,7 @@ import "user/v1/user.proto";
 
 option go_package = "github.com/GoldenSheep402/InterviewS-RE-proto/gen/proto/team/v1;teamV1";
 
-service TeamService{
+service TeamService {
   // CreateTeam only administrator can create team
   rpc CreateTeam(CreateTeamRequest) returns (CreateTeamResponse) {
     option (google.api.http) = {
@@ -56,7 +56,7 @@ service TeamService{
     };
   }
 
-  // GetGroupMember only team manager
+  // GetGroupMembers only team manager
   rpc GetGroupMembers(GetGroupMembersRequest) returns (GetGroupMembersResponse) {
     option (google.api.http) = {
       post: "/gapi/team/v1/group/members"
@@ -106,7 +106,7 @@ message GetGroupInfoResponse {
   Group group = 1;
 }
 
-// GetGroupMember
+// GetGroupMembers
 message GetGroupMembersRequest {
   string groupId = 1;
 }

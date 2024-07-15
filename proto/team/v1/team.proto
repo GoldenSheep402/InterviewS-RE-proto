@@ -3,7 +3,7 @@ package team.v1;
 
 option go_package = "github.com/GoldenSheep402/InterviewS-RE-proto/gen/proto/team/v1;teamV1";
 
-message Team{
+message Team {
   string id = 1;
   string name = 2;
   string description = 3;
