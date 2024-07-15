@@ -14,7 +14,7 @@ service UserService {
     };
   }
 
-  rpc EditUserInfo(EditUserInfoRequest) returns (EditUserInfoResponse) {
+  rpc UpdateUserInfo(UpdateUserInfoRequest) returns (UpdateUserInfoResponse) {
     option (google.api.http) = {
       post: "/gapi/user/v1/edit"
       body: "*"
@@ -29,9 +29,7 @@ message GetUserInfoResponse {
   User info = 1;
 }
 
-message EditUserInfoRequest {
+message UpdateUserInfoRequest {
   User info = 1; // user info, if user id is empty, edit current user info
 }
-message EditUserInfoResponse {
-  User info = 1;
-}
+message UpdateUserInfoResponse {}

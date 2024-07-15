@@ -1,0 +1,115 @@
+syntax = "proto3";
+package team.v1;
+
+import "google/api/annotations.proto";
+import "team/v1/team.proto";
+import "user/v1/user.proto";
+
+option go_package = "github.com/GoldenSheep402/InterviewS-RE-proto/gen/proto/team/v1;teamV1";
+
+service TeamService{
+  // CreateTeam only administrator can create team
+  rpc CreateTeam(CreateTeamRequest) returns (CreateTeamResponse) {
+    option (google.api.http) = {
+      post: "/gapi/team/v1/create"
+      body: "*"
+    };
+  }
+
+  // UpdateTeam only administrator or its manager can update team
+  rpc UpdateTeam(UpdateTeamRequest) returns (UpdateTeamResponse) {
+    option (google.api.http) = {
+      post: "/gapi/team/v1/update"
+      body: "*"
+    };
+  }
+
+  // GetTeamInfo get team info if not manager only des
+  rpc GetTeamInfo(GetTeamInfoRequest) returns (GetTeamInfoResponse) {
+    option (google.api.http) = {
+      post: "/gapi/team/v1/info"
+      body: "*"
+    };
+  }
+
+  // GetTeamMembers only manager
+  rpc GetTeamMembers(GetTeamMembersRequest) returns (GetTeamMembersResponse) {
+    option (google.api.http) = {
+      post: "/gapi/team/v1/members"
+      body: "*"
+    };
+  }
+
+  // CreateGroup only team manager
+  rpc CreateGroup(CreateGroupRequest) returns (CreateGroupResponse) {
+    option (google.api.http) = {
+      post: "/gapi/team/v1/group/create"
+      body: "*"
+    };
+  }
+
+  // GetGroupInfo all user
+  rpc GetGroupInfo(GetGroupInfoRequest) returns (GetGroupInfoResponse) {
+    option (google.api.http) = {
+      post: "/gapi/team/v1/group/info"
+      body: "*"
+    };
+  }
+
+  // GetGroupMember only team manager
+  rpc GetGroupMembers(GetGroupMembersRequest) returns (GetGroupMembersResponse) {
+    option (google.api.http) = {
+      post: "/gapi/team/v1/group/members"
+      body: "*"
+    };
+  }
+}
+
+message CreateTeamRequest {
+  Team team = 1;
+}
+message CreateTeamResponse {}
+
+message UpdateTeamRequest {
+  Team team = 1;
+}
+message UpdateTeamResponse {}
+
+message GetTeamInfoRequest {
+  string teamId = 1;
+}
+message GetTeamInfoResponse {
+  Team team = 1;
+  repeated Group group = 2;
+}
+
+// GetTeamMembers
+message GetTeamMembersRequest {
+  string teamId = 1;
+}
+message GetTeamMembersResponse {
+  repeated user.v1.User user = 1;
+}
+
+// CreateGroup
+message CreateGroupRequest {
+  string teamId = 1;
+  Group group = 2;
+}
+message CreateGroupResponse {}
+
+// GetGroupInfo
+message GetGroupInfoRequest {
+  string groupId = 1;
+}
+message GetGroupInfoResponse {
+  Group group = 1;
+}
+
+// GetGroupMember
+message GetGroupMembersRequest {
+  string groupId = 1;
+}
+message GetGroupMembersResponse {
+  repeated user.v1.User user = 1;
+}
