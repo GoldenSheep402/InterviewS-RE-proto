@@ -20,6 +20,13 @@ service UserService {
       body: "*"
     };
   }
+
+  rpc Register(RegisterRequest) returns (RegisterResponse){
+    option (google.api.http) = {
+      post: "/gapi/user/v1/register"
+      body: "*"
+    };
+  };
 }
 
 message GetUserInfoRequest {
@@ -33,3 +40,15 @@ message UpdateUserInfoRequest {
   User info = 1; // user info, if user id is empty, edit current user info
 }
 message UpdateUserInfoResponse {}
+
+message RegisterRequest {
+  string password = 1;
+  string name = 2;
+  string email = 3;
+  string phone = 4;
+  string staffId = 5;
+  string college = 6;
+  string major = 7;
+}
+
+message RegisterResponse {}
