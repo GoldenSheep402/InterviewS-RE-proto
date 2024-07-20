@@ -7,7 +7,7 @@ option go_package = "github.com/GoldenSheep402/InterviewS-RE-proto/gen/proto/aut
 
 service AuthService {
   //TODO: reg with oauth & login
-  // 用户注册
+  // Register
   rpc Register(RegisterRequest) returns (RegisterResponse) {
     option (google.api.http) = {
       post: "/gapi/auth/v1/register",
@@ -15,7 +15,7 @@ service AuthService {
     };
   }
 
-  // 用户登录
+  // Login
   rpc Login(LoginRequest) returns (LoginResponse) {
     option (google.api.http) = {
       post: "/gapi/auth/v1/login",
@@ -23,7 +23,21 @@ service AuthService {
     };
   }
 
-  // Token刷新
+  // OauthStart
+  rpc OauthStart(OauthStartRequest) returns (OauthStartResponse) {
+    option (google.api.http) = {
+      get: "/gapi/auth/v1/oauth"
+    };
+  }
+
+  // OauthFinish
+  rpc OauthFinish(OauthFinishRequest) returns (OauthFinishResponse) {
+    option (google.api.http) = {
+      get: "/gapi/auth/v1/oauth/callback"
+    };
+  }
+
+  // RefreshToken
   rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {
     option (google.api.http) = {
       post: "/gapi/auth/v1/refreshToken"
@@ -46,6 +60,22 @@ message LoginRequest {
   string password = 2;
 }
 message LoginResponse {
+  string accessToken = 1;
+  string refreshToken = 2;
+}
+
+// OauthStart
+message OauthStartRequest {}
+message OauthStartResponse {
+  string url = 1;
+}
+
+// OauthFinish
+message OauthFinishRequest {
+  string code = 1;
+  string state = 2;
+}
+message OauthFinishResponse {
   string accessToken = 1;
   string refreshToken = 2;
 }
