@@ -45,8 +45,11 @@ message GetUserInfoResponse {
 
 message UpdateUserInfoRequest {
   User info = 1; // user info, if user id is empty, edit current user info
+  string password = 2;
 }
-message UpdateUserInfoResponse {}
+message UpdateUserInfoResponse {
+  string message = 1;
+}
 
 message RegisterRequest {
   string password = 1;
@@ -58,7 +61,10 @@ message RegisterRequest {
   string major = 7;
 }
 
-message RegisterResponse {}
+message RegisterResponse {
+  string  message = 1;
+  string  token = 2;
+}
 
 message LoginRequest {
   string staffId = 1;
@@ -66,5 +72,6 @@ message LoginRequest {
 }
 
 message LoginResponse {
-  string token = 1;
+  string message = 1;
+  string token = 2;
 }
