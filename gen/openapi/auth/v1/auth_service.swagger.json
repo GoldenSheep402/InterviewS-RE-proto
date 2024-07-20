@@ -18,7 +18,7 @@
   "paths": {
     "/gapi/auth/v1/login": {
       "post": {
-        "summary": "用户登录",
+        "summary": "Login",
         "operationId": "AuthService_Login",
         "responses": {
           "200": {
@@ -49,9 +49,69 @@
         ]
       }
     },
+    "/gapi/auth/v1/oauth": {
+      "get": {
+        "summary": "OauthStart",
+        "operationId": "AuthService_OauthStart",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OauthStartResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
+    "/gapi/auth/v1/oauth/callback": {
+      "get": {
+        "summary": "OauthFinish",
+        "operationId": "AuthService_OauthFinish",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OauthFinishResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
     "/gapi/auth/v1/refreshToken": {
       "post": {
-        "summary": "Token刷新",
+        "summary": "RefreshToken",
         "operationId": "AuthService_RefreshToken",
         "responses": {
           "200": {
@@ -84,7 +144,7 @@
     },
     "/gapi/auth/v1/register": {
       "post": {
-        "summary": "TODO: reg with oauth \u0026 login\n用户注册",
+        "summary": "TODO: reg with oauth \u0026 login\nRegister",
         "operationId": "AuthService_Register",
         "responses": {
           "200": {
@@ -164,6 +224,25 @@
           "type": "string"
         },
         "refreshToken": {
+          "type": "string"
+        }
+      }
+    },
+    "v1OauthFinishResponse": {
+      "type": "object",
+      "properties": {
+        "accessToken": {
+          "type": "string"
+        },
+        "refreshToken": {
+          "type": "string"
+        }
+      }
+    },
+    "v1OauthStartResponse": {
+      "type": "object",
+      "properties": {
+        "url": {
           "type": "string"
         }
       }

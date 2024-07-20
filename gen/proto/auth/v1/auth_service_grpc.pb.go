@@ -21,6 +21,8 @@ const _ = grpc.SupportPackageIsVersion8
 const (
 	AuthService_Register_FullMethodName     = "/auth.v1.AuthService/Register"
 	AuthService_Login_FullMethodName        = "/auth.v1.AuthService/Login"
+	AuthService_OauthStart_FullMethodName   = "/auth.v1.AuthService/OauthStart"
+	AuthService_OauthFinish_FullMethodName  = "/auth.v1.AuthService/OauthFinish"
 	AuthService_RefreshToken_FullMethodName = "/auth.v1.AuthService/RefreshToken"
 )
 
@@ -29,11 +31,15 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthServiceClient interface {
 	// TODO: reg with oauth & login
-	// 用户注册
+	// Register
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
-	// 用户登录
+	// Login
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	// Token刷新
+	// OauthStart
+	OauthStart(ctx context.Context, in *OauthStartRequest, opts ...grpc.CallOption) (*OauthStartResponse, error)
+	// OauthFinish
+	OauthFinish(ctx context.Context, in *OauthFinishRequest, opts ...grpc.CallOption) (*OauthFinishResponse, error)
+	// RefreshToken
 	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
 }
 
@@ -65,6 +71,26 @@ func (c *authServiceClient) Login(ctx context.Context, in *LoginRequest, opts ..
 	return out, nil
 }
 
+func (c *authServiceClient) OauthStart(ctx context.Context, in *OauthStartRequest, opts ...grpc.CallOption) (*OauthStartResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(OauthStartResponse)
+	err := c.cc.Invoke(ctx, AuthService_OauthStart_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authServiceClient) OauthFinish(ctx context.Context, in *OauthFinishRequest, opts ...grpc.CallOption) (*OauthFinishResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(OauthFinishResponse)
+	err := c.cc.Invoke(ctx, AuthService_OauthFinish_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *authServiceClient) RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(RefreshTokenResponse)
@@ -80,11 +106,15 @@ func (c *authServiceClient) RefreshToken(ctx context.Context, in *RefreshTokenRe
 // for forward compatibility
 type AuthServiceServer interface {
 	// TODO: reg with oauth & login
-	// 用户注册
+	// Register
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
-	// 用户登录
+	// Login
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	// Token刷新
+	// OauthStart
+	OauthStart(context.Context, *OauthStartRequest) (*OauthStartResponse, error)
+	// OauthFinish
+	OauthFinish(context.Context, *OauthFinishRequest) (*OauthFinishResponse, error)
+	// RefreshToken
 	RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
@@ -98,6 +128,12 @@ func (UnimplementedAuthServiceServer) Register(context.Context, *RegisterRequest
 }
 func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
+func (UnimplementedAuthServiceServer) OauthStart(context.Context, *OauthStartRequest) (*OauthStartResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OauthStart not implemented")
+}
+func (UnimplementedAuthServiceServer) OauthFinish(context.Context, *OauthFinishRequest) (*OauthFinishResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method OauthFinish not implemented")
 }
 func (UnimplementedAuthServiceServer) RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
@@ -151,6 +187,42 @@ func _AuthService_Login_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_OauthStart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OauthStartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).OauthStart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_OauthStart_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).OauthStart(ctx, req.(*OauthStartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AuthService_OauthFinish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OauthFinishRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).OauthFinish(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_OauthFinish_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).OauthFinish(ctx, req.(*OauthFinishRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _AuthService_RefreshToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RefreshTokenRequest)
 	if err := dec(in); err != nil {
@@ -183,6 +255,14 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Login",
 			Handler:    _AuthService_Login_Handler,
+		},
+		{
+			MethodName: "OauthStart",
+			Handler:    _AuthService_OauthStart_Handler,
+		},
+		{
+			MethodName: "OauthFinish",
+			Handler:    _AuthService_OauthFinish_Handler,
 		},
 		{
 			MethodName: "RefreshToken",
