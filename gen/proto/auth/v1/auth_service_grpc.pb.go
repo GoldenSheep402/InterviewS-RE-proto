@@ -19,19 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	AuthService_Register_FullMethodName     = "/auth.v1.AuthService/Register"
-	AuthService_Login_FullMethodName        = "/auth.v1.AuthService/Login"
-	AuthService_OauthStart_FullMethodName   = "/auth.v1.AuthService/OauthStart"
-	AuthService_OauthFinish_FullMethodName  = "/auth.v1.AuthService/OauthFinish"
-	AuthService_RefreshToken_FullMethodName = "/auth.v1.AuthService/RefreshToken"
+	AuthService_Register_FullMethodName                 = "/auth.v1.AuthService/Register"
+	AuthService_Login_FullMethodName                    = "/auth.v1.AuthService/Login"
+	AuthService_OauthStart_FullMethodName               = "/auth.v1.AuthService/OauthStart"
+	AuthService_OauthFinish_FullMethodName              = "/auth.v1.AuthService/OauthFinish"
+	AuthService_RefreshToken_FullMethodName             = "/auth.v1.AuthService/RefreshToken"
+	AuthService_UpdateEmailLoginPassword_FullMethodName = "/auth.v1.AuthService/UpdateEmailLoginPassword"
 )
 
 // AuthServiceClient is the client API for AuthService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthServiceClient interface {
-	// TODO: reg with oauth & login
 	// Register
+	// Set the email as bind and personal info
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
 	// Login
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
@@ -41,6 +42,13 @@ type AuthServiceClient interface {
 	OauthFinish(ctx context.Context, in *OauthFinishRequest, opts ...grpc.CallOption) (*OauthFinishResponse, error)
 	// RefreshToken
 	RefreshToken(ctx context.Context, in *RefreshTokenRequest, opts ...grpc.CallOption) (*RefreshTokenResponse, error)
+	// UpdateEmailLoginPassword
+	// Update the password of the way of email login
+	// The email are in bind table and be unique
+	// If the email is not in bind table, create one
+	// If exist , overwrite the password and email
+	// TODO: add the email verification
+	UpdateEmailLoginPassword(ctx context.Context, in *UpdateEmailLoginPasswordRequest, opts ...grpc.CallOption) (*UpdateEmailLoginPasswordResponse, error)
 }
 
 type authServiceClient struct {
@@ -101,12 +109,22 @@ func (c *authServiceClient) RefreshToken(ctx context.Context, in *RefreshTokenRe
 	return out, nil
 }
 
+func (c *authServiceClient) UpdateEmailLoginPassword(ctx context.Context, in *UpdateEmailLoginPasswordRequest, opts ...grpc.CallOption) (*UpdateEmailLoginPasswordResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateEmailLoginPasswordResponse)
+	err := c.cc.Invoke(ctx, AuthService_UpdateEmailLoginPassword_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AuthServiceServer is the server API for AuthService service.
 // All implementations must embed UnimplementedAuthServiceServer
 // for forward compatibility
 type AuthServiceServer interface {
-	// TODO: reg with oauth & login
 	// Register
+	// Set the email as bind and personal info
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
 	// Login
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
@@ -116,6 +134,13 @@ type AuthServiceServer interface {
 	OauthFinish(context.Context, *OauthFinishRequest) (*OauthFinishResponse, error)
 	// RefreshToken
 	RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error)
+	// UpdateEmailLoginPassword
+	// Update the password of the way of email login
+	// The email are in bind table and be unique
+	// If the email is not in bind table, create one
+	// If exist , overwrite the password and email
+	// TODO: add the email verification
+	UpdateEmailLoginPassword(context.Context, *UpdateEmailLoginPasswordRequest) (*UpdateEmailLoginPasswordResponse, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -137,6 +162,9 @@ func (UnimplementedAuthServiceServer) OauthFinish(context.Context, *OauthFinishR
 }
 func (UnimplementedAuthServiceServer) RefreshToken(context.Context, *RefreshTokenRequest) (*RefreshTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
+}
+func (UnimplementedAuthServiceServer) UpdateEmailLoginPassword(context.Context, *UpdateEmailLoginPasswordRequest) (*UpdateEmailLoginPasswordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateEmailLoginPassword not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
 
@@ -241,6 +269,24 @@ func _AuthService_RefreshToken_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AuthService_UpdateEmailLoginPassword_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateEmailLoginPasswordRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServiceServer).UpdateEmailLoginPassword(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AuthService_UpdateEmailLoginPassword_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServiceServer).UpdateEmailLoginPassword(ctx, req.(*UpdateEmailLoginPasswordRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AuthService_ServiceDesc is the grpc.ServiceDesc for AuthService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -267,6 +313,10 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RefreshToken",
 			Handler:    _AuthService_RefreshToken_Handler,
+		},
+		{
+			MethodName: "UpdateEmailLoginPassword",
+			Handler:    _AuthService_UpdateEmailLoginPassword_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -50,6 +50,14 @@ export type RefreshTokenResponse = {
   refreshToken?: string
 }
 
+export type UpdateEmailLoginPasswordRequest = {
+  email?: string
+  newPassword?: string
+}
+
+export type UpdateEmailLoginPasswordResponse = {
+}
+
 export class AuthService {
   static Register(req: RegisterRequest, initReq?: fm.InitReq): Promise<RegisterResponse> {
     return fm.fetchReq<RegisterRequest, RegisterResponse>(`/gapi/auth/v1/register`, {...initReq, method: "POST", body: JSON.stringify(req, fm.replacer)})
@@ -65,5 +73,8 @@ export class AuthService {
   }
   static RefreshToken(req: RefreshTokenRequest, initReq?: fm.InitReq): Promise<RefreshTokenResponse> {
     return fm.fetchReq<RefreshTokenRequest, RefreshTokenResponse>(`/gapi/auth/v1/refreshToken`, {...initReq, method: "POST", body: JSON.stringify(req, fm.replacer)})
+  }
+  static UpdateEmailLoginPassword(req: UpdateEmailLoginPasswordRequest, initReq?: fm.InitReq): Promise<UpdateEmailLoginPasswordResponse> {
+    return fm.fetchReq<UpdateEmailLoginPasswordRequest, UpdateEmailLoginPasswordResponse>(`/gapi/auth/v1/updatePassword/email`, {...initReq, method: "POST", body: JSON.stringify(req, fm.replacer)})
   }
 }

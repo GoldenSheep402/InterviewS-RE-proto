@@ -18,6 +18,7 @@
   "paths": {
     "/gapi/user/v1/edit": {
       "post": {
+        "summary": "UpdateUserInfo update user info\nEmail here is for communication, not for login\nLogin email is in bind table",
         "operationId": "UserService_UpdateUserInfo",
         "responses": {
           "200": {

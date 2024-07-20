@@ -144,7 +144,7 @@
     },
     "/gapi/auth/v1/register": {
       "post": {
-        "summary": "TODO: reg with oauth \u0026 login\nRegister",
+        "summary": "Register\nSet the email as bind and personal info",
         "operationId": "AuthService_Register",
         "responses": {
           "200": {
@@ -167,6 +167,39 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/v1RegisterRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AuthService"
+        ]
+      }
+    },
+    "/gapi/auth/v1/updatePassword/email": {
+      "post": {
+        "summary": "UpdateEmailLoginPassword\nUpdate the password of the way of email login\nThe email are in bind table and be unique\nIf the email is not in bind table, create one\nIf exist , overwrite the password and email\nTODO: add the email verification",
+        "operationId": "AuthService_UpdateEmailLoginPassword",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateEmailLoginPasswordResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateEmailLoginPasswordRequest"
             }
           }
         ],
@@ -215,7 +248,7 @@
           "type": "string"
         }
       },
-      "title": "用户登录"
+      "title": "Login"
     },
     "v1LoginResponse": {
       "type": "object",
@@ -254,7 +287,7 @@
           "type": "string"
         }
       },
-      "title": "Token刷新"
+      "title": "TokenRefresh"
     },
     "v1RefreshTokenResponse": {
       "type": "object",
@@ -280,9 +313,24 @@
           "type": "string"
         }
       },
-      "title": "用户注册"
+      "title": "Register"
     },
     "v1RegisterResponse": {
+      "type": "object"
+    },
+    "v1UpdateEmailLoginPasswordRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "newPassword": {
+          "type": "string"
+        }
+      },
+      "title": "UpdateEmailLoginPassword"
+    },
+    "v1UpdateEmailLoginPasswordResponse": {
       "type": "object"
     }
   }
