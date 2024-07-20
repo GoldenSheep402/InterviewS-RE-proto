@@ -6,8 +6,8 @@ import "google/api/annotations.proto";
 option go_package = "github.com/GoldenSheep402/InterviewS-RE-proto/gen/proto/auth/v1;authV1";
 
 service AuthService {
-  //TODO: reg with oauth & login
   // Register
+  // Set the email as bind and personal info
   rpc Register(RegisterRequest) returns (RegisterResponse) {
     option (google.api.http) = {
       post: "/gapi/auth/v1/register",
@@ -44,9 +44,22 @@ service AuthService {
       body: "*"
     };
   }
+
+  // UpdateEmailLoginPassword
+  // Update the password of the way of email login
+  // The email are in bind table and be unique
+  // If the email is not in bind table, create one
+  // If exist , overwrite the password and email
+  // TODO: add the email verification
+  rpc UpdateEmailLoginPassword(UpdateEmailLoginPasswordRequest) returns (UpdateEmailLoginPasswordResponse) {
+    option (google.api.http) = {
+      post: "/gapi/auth/v1/updatePassword/email"
+      body: "*"
+    };
+  }
 }
 
-// 用户注册
+// Register
 message RegisterRequest {
   string name = 1;
   string email = 2;
@@ -54,7 +67,7 @@ message RegisterRequest {
 }
 message RegisterResponse {}
 
-// 用户登录
+// Login
 message LoginRequest {
   string email = 1;
   string password = 2;
@@ -80,7 +93,7 @@ message OauthFinishResponse {
   string refreshToken = 2;
 }
 
-// Token刷新
+// TokenRefresh
 message RefreshTokenRequest {
   string refreshToken = 1;
 }
@@ -88,3 +101,10 @@ message RefreshTokenResponse {
   string accessToken = 1;
   string refreshToken = 2;
 }
+
+// UpdateEmailLoginPassword
+message UpdateEmailLoginPasswordRequest {
+  string email = 1;
+  string newPassword = 2;
+}
+message UpdateEmailLoginPasswordResponse {}
