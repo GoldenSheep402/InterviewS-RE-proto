@@ -1,0 +1,435 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "questionnaire/v1/questionnaire_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "QuestionnaireService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/gapi/questionnaire/v1/create": {
+      "post": {
+        "summary": "创建问卷",
+        "operationId": "QuestionnaireService_CreateQuestionnaire",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateQuestionnaireResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateQuestionnaireRequest"
+            }
+          }
+        ],
+        "tags": [
+          "QuestionnaireService"
+        ]
+      }
+    },
+    "/gapi/v1/questionnaire/Info": {
+      "post": {
+        "summary": "获取答卷",
+        "operationId": "QuestionnaireService_GetAnswer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetAnswerResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetAnswerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "QuestionnaireService"
+        ]
+      }
+    },
+    "/gapi/v1/questionnaire/delete": {
+      "post": {
+        "summary": "获取问卷",
+        "operationId": "QuestionnaireService_GetQuestionnaire",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetQuestionnaireResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetQuestionnaireRequest"
+            }
+          }
+        ],
+        "tags": [
+          "QuestionnaireService"
+        ]
+      }
+    },
+    "/gapi/v1/questionnaire/submit": {
+      "post": {
+        "summary": "提交答卷",
+        "operationId": "QuestionnaireService_SubmitAnswer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SubmitAnswerResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SubmitAnswerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "QuestionnaireService"
+        ]
+      }
+    },
+    "/gapi/v1/questionnaire/update": {
+      "post": {
+        "summary": "修改问卷",
+        "operationId": "QuestionnaireService_UpdateQuestionnaire",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateQuestionnaireResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateQuestionnaireRequest"
+            }
+          }
+        ],
+        "tags": [
+          "QuestionnaireService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1Answer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "responseId": {
+          "type": "string"
+        },
+        "optionId": {
+          "type": "string"
+        },
+        "answerText": {
+          "type": "string"
+        }
+      }
+    },
+    "v1CreateQuestionnaireRequest": {
+      "type": "object",
+      "properties": {
+        "questionnaire": {
+          "$ref": "#/definitions/v1Questionnaire"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1QuestionsList"
+          }
+        }
+      }
+    },
+    "v1CreateQuestionnaireResponse": {
+      "type": "object"
+    },
+    "v1GetAnswerRequest": {
+      "type": "object",
+      "properties": {
+        "questionnaireId": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetAnswerResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        },
+        "answers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Answer"
+          }
+        }
+      }
+    },
+    "v1GetQuestionnaireRequest": {
+      "type": "object",
+      "properties": {
+        "questionnaireId": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetQuestionnaireResponse": {
+      "type": "object",
+      "properties": {
+        "questionnaire": {
+          "$ref": "#/definitions/v1Questionnaire"
+        },
+        "user": {
+          "$ref": "#/definitions/v1User"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1QuestionsList"
+          }
+        }
+      }
+    },
+    "v1Option": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "questionId": {
+          "type": "string"
+        },
+        "optionText": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "questionnaireId": {
+          "type": "string"
+        },
+        "questionType": {
+          "type": "string"
+        },
+        "questionText": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Questionnaire": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "gid": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "v1QuestionsList": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "$ref": "#/definitions/v1Question"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Option"
+          }
+        }
+      }
+    },
+    "v1Response": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "questionnaireId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        }
+      }
+    },
+    "v1SubmitAnswerRequest": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "$ref": "#/definitions/v1Response"
+        },
+        "answers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Answer"
+          }
+        }
+      }
+    },
+    "v1SubmitAnswerResponse": {
+      "type": "object"
+    },
+    "v1UpdateQuestionnaireRequest": {
+      "type": "object",
+      "properties": {
+        "questionId": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Option"
+          }
+        }
+      }
+    },
+    "v1UpdateQuestionnaireResponse": {
+      "type": "object"
+    },
+    "v1User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "staffId": {
+          "type": "string"
+        },
+        "college": {
+          "type": "string"
+        },
+        "major": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
