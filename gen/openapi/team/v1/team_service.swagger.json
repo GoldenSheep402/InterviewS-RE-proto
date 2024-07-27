@@ -290,7 +290,12 @@
       "title": "CreateGroup"
     },
     "v1CreateGroupResponse": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string"
+        }
+      }
     },
     "v1CreateTeamRequest": {
       "type": "object",
@@ -301,7 +306,12 @@
       }
     },
     "v1CreateTeamResponse": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "teamId": {
+          "type": "string"
+        }
+      }
     },
     "v1GetGroupInfoRequest": {
       "type": "object",

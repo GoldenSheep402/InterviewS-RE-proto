@@ -12,6 +12,7 @@ export type CreateTeamRequest = {
 }
 
 export type CreateTeamResponse = {
+  teamId?: string
 }
 
 export type UpdateTeamRequest = {
@@ -44,6 +45,7 @@ export type CreateGroupRequest = {
 }
 
 export type CreateGroupResponse = {
+  groupId?: string
 }
 
 export type GetGroupInfoRequest = {
