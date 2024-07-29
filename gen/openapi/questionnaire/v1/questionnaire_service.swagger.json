@@ -316,7 +316,8 @@
           "type": "string"
         },
         "questionType": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
         "questionText": {
           "type": "string"
