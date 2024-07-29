@@ -18,7 +18,7 @@ message QuestionsList{
 message Question {
   string id = 1;
   string questionnaireId = 2;
-  string questionType = 3;
+  int64 questionType = 3;
   string questionText = 4;
 }
 
