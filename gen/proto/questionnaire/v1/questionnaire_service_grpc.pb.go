@@ -29,8 +29,6 @@ const (
 // QuestionnaireServiceClient is the client API for QuestionnaireService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-//
-// QuestionnaireService 服务定义
 type QuestionnaireServiceClient interface {
 	// 创建问卷
 	CreateQuestionnaire(ctx context.Context, in *CreateQuestionnaireRequest, opts ...grpc.CallOption) (*CreateQuestionnaireResponse, error)
@@ -105,8 +103,6 @@ func (c *questionnaireServiceClient) GetAnswer(ctx context.Context, in *GetAnswe
 // QuestionnaireServiceServer is the server API for QuestionnaireService service.
 // All implementations must embed UnimplementedQuestionnaireServiceServer
 // for forward compatibility
-//
-// QuestionnaireService 服务定义
 type QuestionnaireServiceServer interface {
 	// 创建问卷
 	CreateQuestionnaire(context.Context, *CreateQuestionnaireRequest) (*CreateQuestionnaireResponse, error)

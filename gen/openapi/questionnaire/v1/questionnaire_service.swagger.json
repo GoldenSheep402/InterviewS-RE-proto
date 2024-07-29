@@ -283,9 +283,6 @@
         "questionnaire": {
           "$ref": "#/definitions/v1Questionnaire"
         },
-        "user": {
-          "$ref": "#/definitions/v1User"
-        },
         "questions": {
           "type": "array",
           "items": {
@@ -390,14 +387,14 @@
     "v1UpdateQuestionnaireRequest": {
       "type": "object",
       "properties": {
-        "questionId": {
-          "type": "string"
+        "questionnaire": {
+          "$ref": "#/definitions/v1Questionnaire"
         },
-        "options": {
+        "questions": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/v1Option"
+            "$ref": "#/definitions/v1QuestionsList"
           }
         }
       }

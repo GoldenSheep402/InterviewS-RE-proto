@@ -16,8 +16,8 @@ export type CreateQuestionnaireResponse = {
 }
 
 export type UpdateQuestionnaireRequest = {
-  questionId?: string
-  options?: QuestionnaireV1Questionnaire.Option[]
+  questionnaire?: QuestionnaireV1Questionnaire.Questionnaire
+  questions?: QuestionnaireV1Questionnaire.QuestionsList[]
 }
 
 export type UpdateQuestionnaireResponse = {
@@ -29,7 +29,6 @@ export type GetQuestionnaireRequest = {
 
 export type GetQuestionnaireResponse = {
   questionnaire?: QuestionnaireV1Questionnaire.Questionnaire
-  user?: UserV1User.User
   questions?: QuestionnaireV1Questionnaire.QuestionsList[]
 }
 
