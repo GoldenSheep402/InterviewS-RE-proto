@@ -68,7 +68,9 @@ service TeamService {
 message CreateTeamRequest {
   Team team = 1;
 }
-message CreateTeamResponse {}
+message CreateTeamResponse {
+  string teamId = 1;
+}
 
 message UpdateTeamRequest {
   Team team = 1;
@@ -96,7 +98,9 @@ message CreateGroupRequest {
   string teamId = 1;
   Group group = 2;
 }
-message CreateGroupResponse {}
+message CreateGroupResponse {
+  string groupId = 1;
+}
 
 // GetGroupInfo
 message GetGroupInfoRequest {

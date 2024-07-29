@@ -1,12 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "team/v1/team_service.proto",
+    "title": "questionnaire/v1/questionnaire_service.proto",
     "version": "version not set"
   },
   "tags": [
     {
-      "name": "TeamService"
+      "name": "QuestionnaireService"
     }
   ],
   "consumes": [
@@ -16,15 +16,15 @@
     "application/json"
   ],
   "paths": {
-    "/gapi/team/v1/create": {
+    "/gapi/questionnaire/v1/create": {
       "post": {
-        "summary": "CreateTeam only administrator can create team",
-        "operationId": "TeamService_CreateTeam",
+        "summary": "创建问卷",
+        "operationId": "QuestionnaireService_CreateQuestionnaire",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1CreateTeamResponse"
+              "$ref": "#/definitions/v1CreateQuestionnaireResponse"
             }
           },
           "default": {
@@ -40,24 +40,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1CreateTeamRequest"
+              "$ref": "#/definitions/v1CreateQuestionnaireRequest"
             }
           }
         ],
         "tags": [
-          "TeamService"
+          "QuestionnaireService"
         ]
       }
     },
-    "/gapi/team/v1/group/create": {
+    "/gapi/v1/questionnaire/Info": {
       "post": {
-        "summary": "CreateGroup only team manager",
-        "operationId": "TeamService_CreateGroup",
+        "summary": "获取答卷",
+        "operationId": "QuestionnaireService_GetAnswer",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1CreateGroupResponse"
+              "$ref": "#/definitions/v1GetAnswerResponse"
             }
           },
           "default": {
@@ -73,24 +73,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1CreateGroupRequest"
+              "$ref": "#/definitions/v1GetAnswerRequest"
             }
           }
         ],
         "tags": [
-          "TeamService"
+          "QuestionnaireService"
         ]
       }
     },
-    "/gapi/team/v1/group/info": {
+    "/gapi/v1/questionnaire/delete": {
       "post": {
-        "summary": "GetGroupInfo all user",
-        "operationId": "TeamService_GetGroupInfo",
+        "summary": "获取问卷",
+        "operationId": "QuestionnaireService_GetQuestionnaire",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GetGroupInfoResponse"
+              "$ref": "#/definitions/v1GetQuestionnaireResponse"
             }
           },
           "default": {
@@ -106,24 +106,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1GetGroupInfoRequest"
+              "$ref": "#/definitions/v1GetQuestionnaireRequest"
             }
           }
         ],
         "tags": [
-          "TeamService"
+          "QuestionnaireService"
         ]
       }
     },
-    "/gapi/team/v1/group/members": {
+    "/gapi/v1/questionnaire/submit": {
       "post": {
-        "summary": "GetGroupMembers only team manager",
-        "operationId": "TeamService_GetGroupMembers",
+        "summary": "提交答卷",
+        "operationId": "QuestionnaireService_SubmitAnswer",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GetGroupMembersResponse"
+              "$ref": "#/definitions/v1SubmitAnswerResponse"
             }
           },
           "default": {
@@ -139,24 +139,24 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1GetGroupMembersRequest"
+              "$ref": "#/definitions/v1SubmitAnswerRequest"
             }
           }
         ],
         "tags": [
-          "TeamService"
+          "QuestionnaireService"
         ]
       }
     },
-    "/gapi/team/v1/info": {
+    "/gapi/v1/questionnaire/update": {
       "post": {
-        "summary": "GetTeamInfo get team info if not manager only des",
-        "operationId": "TeamService_GetTeamInfo",
+        "summary": "修改问卷",
+        "operationId": "QuestionnaireService_UpdateQuestionnaire",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1GetTeamInfoResponse"
+              "$ref": "#/definitions/v1UpdateQuestionnaireResponse"
             }
           },
           "default": {
@@ -172,78 +172,12 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1GetTeamInfoRequest"
+              "$ref": "#/definitions/v1UpdateQuestionnaireRequest"
             }
           }
         ],
         "tags": [
-          "TeamService"
-        ]
-      }
-    },
-    "/gapi/team/v1/members": {
-      "post": {
-        "summary": "GetTeamMembers only manager",
-        "operationId": "TeamService_GetTeamMembers",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1GetTeamMembersResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1GetTeamMembersRequest"
-            }
-          }
-        ],
-        "tags": [
-          "TeamService"
-        ]
-      }
-    },
-    "/gapi/team/v1/update": {
-      "post": {
-        "summary": "UpdateTeam only administrator or its manager can update team",
-        "operationId": "TeamService_UpdateTeam",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1UpdateTeamResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1UpdateTeamRequest"
-            }
-          }
-        ],
-        "tags": [
-          "TeamService"
+          "QuestionnaireService"
         ]
       }
     }
@@ -277,134 +211,128 @@
         }
       }
     },
-    "v1CreateGroupRequest": {
-      "type": "object",
-      "properties": {
-        "teamId": {
-          "type": "string"
-        },
-        "group": {
-          "$ref": "#/definitions/v1Group"
-        }
-      },
-      "title": "CreateGroup"
-    },
-    "v1CreateGroupResponse": {
-      "type": "object",
-      "properties": {
-        "groupId": {
-          "type": "string"
-        }
-      }
-    },
-    "v1CreateTeamRequest": {
-      "type": "object",
-      "properties": {
-        "team": {
-          "$ref": "#/definitions/v1Team"
-        }
-      }
-    },
-    "v1CreateTeamResponse": {
-      "type": "object",
-      "properties": {
-        "teamId": {
-          "type": "string"
-        }
-      }
-    },
-    "v1GetGroupInfoRequest": {
-      "type": "object",
-      "properties": {
-        "groupId": {
-          "type": "string"
-        }
-      },
-      "title": "GetGroupInfo"
-    },
-    "v1GetGroupInfoResponse": {
-      "type": "object",
-      "properties": {
-        "group": {
-          "$ref": "#/definitions/v1Group"
-        }
-      }
-    },
-    "v1GetGroupMembersRequest": {
-      "type": "object",
-      "properties": {
-        "groupId": {
-          "type": "string"
-        }
-      },
-      "title": "GetGroupMembers"
-    },
-    "v1GetGroupMembersResponse": {
-      "type": "object",
-      "properties": {
-        "user": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/v1User"
-          }
-        }
-      }
-    },
-    "v1GetTeamInfoRequest": {
-      "type": "object",
-      "properties": {
-        "teamId": {
-          "type": "string"
-        }
-      }
-    },
-    "v1GetTeamInfoResponse": {
-      "type": "object",
-      "properties": {
-        "team": {
-          "$ref": "#/definitions/v1Team"
-        },
-        "group": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/v1Group"
-          }
-        }
-      }
-    },
-    "v1GetTeamMembersRequest": {
-      "type": "object",
-      "properties": {
-        "teamId": {
-          "type": "string"
-        }
-      },
-      "title": "GetTeamMembers"
-    },
-    "v1GetTeamMembersResponse": {
-      "type": "object",
-      "properties": {
-        "user": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/v1User"
-          }
-        }
-      }
-    },
-    "v1Group": {
+    "v1Answer": {
       "type": "object",
       "properties": {
         "id": {
           "type": "string"
         },
-        "teamId": {
+        "responseId": {
           "type": "string"
         },
-        "name": {
+        "optionId": {
+          "type": "string"
+        },
+        "answerText": {
+          "type": "string"
+        }
+      }
+    },
+    "v1CreateQuestionnaireRequest": {
+      "type": "object",
+      "properties": {
+        "questionnaire": {
+          "$ref": "#/definitions/v1Questionnaire"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1QuestionsList"
+          }
+        }
+      }
+    },
+    "v1CreateQuestionnaireResponse": {
+      "type": "object"
+    },
+    "v1GetAnswerRequest": {
+      "type": "object",
+      "properties": {
+        "questionnaireId": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetAnswerResponse": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/v1User"
+        },
+        "answers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Answer"
+          }
+        }
+      }
+    },
+    "v1GetQuestionnaireRequest": {
+      "type": "object",
+      "properties": {
+        "questionnaireId": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GetQuestionnaireResponse": {
+      "type": "object",
+      "properties": {
+        "questionnaire": {
+          "$ref": "#/definitions/v1Questionnaire"
+        },
+        "user": {
+          "$ref": "#/definitions/v1User"
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1QuestionsList"
+          }
+        }
+      }
+    },
+    "v1Option": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "questionId": {
+          "type": "string"
+        },
+        "optionText": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Question": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "questionnaireId": {
+          "type": "string"
+        },
+        "questionType": {
+          "type": "string"
+        },
+        "questionText": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Questionnaire": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "gid": {
           "type": "string"
         },
         "description": {
@@ -412,29 +340,69 @@
         }
       }
     },
-    "v1Team": {
+    "v1QuestionsList": {
+      "type": "object",
+      "properties": {
+        "question": {
+          "$ref": "#/definitions/v1Question"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Option"
+          }
+        }
+      }
+    },
+    "v1Response": {
       "type": "object",
       "properties": {
         "id": {
           "type": "string"
         },
-        "name": {
+        "questionnaireId": {
           "type": "string"
         },
-        "description": {
+        "userId": {
           "type": "string"
         }
       }
     },
-    "v1UpdateTeamRequest": {
+    "v1SubmitAnswerRequest": {
       "type": "object",
       "properties": {
-        "team": {
-          "$ref": "#/definitions/v1Team"
+        "response": {
+          "$ref": "#/definitions/v1Response"
+        },
+        "answers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Answer"
+          }
         }
       }
     },
-    "v1UpdateTeamResponse": {
+    "v1SubmitAnswerResponse": {
+      "type": "object"
+    },
+    "v1UpdateQuestionnaireRequest": {
+      "type": "object",
+      "properties": {
+        "questionId": {
+          "type": "string"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Option"
+          }
+        }
+      }
+    },
+    "v1UpdateQuestionnaireResponse": {
       "type": "object"
     },
     "v1User": {

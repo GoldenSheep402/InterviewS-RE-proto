@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package questionnaire.v1;
+
+import "google/api/annotations.proto";
+import "questionnaire/v1/questionnaire.proto";
+import "user/v1/user.proto";
+
+option go_package = "github.com/GoldenSheep402/InterviewS-RE-proto/gen/proto/questionnaire/v1;questionnaireV1";
+
+service QuestionnaireService {
+  // 创建问卷
+  rpc CreateQuestionnaire(CreateQuestionnaireRequest) returns (CreateQuestionnaireResponse) {
+    option (google.api.http) = {
+      post: "/gapi/questionnaire/v1/create"
+      body: "*"
+    };
+  }
+
+  // 修改问卷
+  rpc UpdateQuestionnaire(UpdateQuestionnaireRequest) returns (UpdateQuestionnaireResponse) {
+    option (google.api.http) = {
+      post: "/gapi/v1/questionnaire/update"
+      body: "*"
+    };
+  }
+
+  // 获取问卷
+  rpc GetQuestionnaire(GetQuestionnaireRequest) returns (GetQuestionnaireResponse) {
+    option (google.api.http) = {
+      post: "/gapi/v1/questionnaire/delete"
+      body: "*"
+    };
+  }
+
+  // 提交答卷
+  rpc SubmitAnswer(SubmitAnswerRequest) returns (SubmitAnswerResponse) {
+    option (google.api.http) = {
+      post: "/gapi/v1/questionnaire/submit"
+      body: "*"
+    };
+  }
+
+  // 获取答卷
+  rpc GetAnswer(GetAnswerRequest) returns (GetAnswerResponse) {
+    option (google.api.http) = {
+      post: "/gapi/v1/questionnaire/Info"
+      body: "*"
+    };
+  }
+
+}
+
+message CreateQuestionnaireRequest {
+  Questionnaire questionnaire = 1;
+  repeated QuestionsList questions = 2;
+}
+message CreateQuestionnaireResponse {}
+
+
+message UpdateQuestionnaireRequest {
+  Questionnaire questionnaire = 1;
+  repeated QuestionsList questions = 2;
+}
+message UpdateQuestionnaireResponse {}
+
+
+message GetQuestionnaireRequest {
+  string questionnaireId = 1;
+}
+message GetQuestionnaireResponse {
+  Questionnaire questionnaire = 1;
+  repeated QuestionsList questions = 2;
+}
+
+message SubmitAnswerRequest {
+  Response response = 1;
+  repeated Answer answers = 2;
+}
+message SubmitAnswerResponse {}
+
+message GetAnswerRequest {
+  string questionnaireId = 1;
+}
+message GetAnswerResponse {
+  user.v1.User user = 1;
+  repeated Answer answers = 2;
+}
+
+
+
+
+
+
+

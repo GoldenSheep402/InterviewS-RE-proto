@@ -1,0 +1,42 @@
+syntax = "proto3";
+package questionnaire.v1;
+
+option go_package = "github.com/GoldenSheep402/InterviewS-RE-proto/gen/proto/questionnaire/v1;questionnaireV1";
+
+
+message Questionnaire {
+  string id = 1;
+  string gid = 2;
+  string description = 3;
+}
+
+message QuestionsList{
+  Question question = 1;
+  repeated Option options = 2;
+}
+
+message Question {
+  string id = 1;
+  string questionnaireId = 2;
+  string questionType = 3;
+  string questionText = 4;
+}
+
+message Option {
+  string id = 1;
+  string questionId = 2;
+  string optionText = 3;
+}
+
+message Response {
+  string id = 1;
+  string questionnaireId = 2;
+  string userId = 3;
+}
+
+message Answer {
+  string id = 1;
+  string responseId = 2 ;
+  string optionId = 3;
+  string answerText = 4;
+}
