@@ -8,6 +8,7 @@ message Questionnaire {
   string id = 1;
   string gid = 2;
   string description = 3;
+  string name = 4;
 }
 
 message QuestionsList{
