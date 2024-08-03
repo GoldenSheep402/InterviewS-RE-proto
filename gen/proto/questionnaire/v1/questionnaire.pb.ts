@@ -7,6 +7,7 @@ export type Questionnaire = {
   id?: string
   gid?: string
   description?: string
+  name?: string
 }
 
 export type QuestionsList = {
